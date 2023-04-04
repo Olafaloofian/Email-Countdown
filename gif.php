@@ -1,40 +1,40 @@
 <?php
 
 	//Leave all this stuff as it is
-	date_default_timezone_set('Europe/London');
+	date_default_timezone_set('America/Los_Angeles');
 	include 'GIFEncoder.class.php';
 	include 'php52-fix.php';
-	$time = $_GET['time'];
-	$future_date = new DateTime(date('r',strtotime($time)));
+	$future_date = new DateTime(date('r', strtotime("6 April 2023")));
 	$time_now = time();
 	$now = new DateTime(date('r', $time_now));
-	$frames = array();	
+	$frames = array();
 	$delays = array();
 
 
 	// Your image link
-	$image = imagecreatefrompng('images/countdown.png');
+	$image_path = __DIR__ . DIRECTORY_SEPARATOR . 'images/background.png';
+	$image = imagecreatefrompng($image_path);
 
 	$delay = 100;// milliseconds
 
 	$font = array(
-		'size' => 23, // Font size, in pts usually.
+		'size' => 48, // Font size, in pts usually.
 		'angle' => 0, // Angle of the text
-		'x-offset' => 7, // The larger the number the further the distance from the left hand side, 0 to align to the left.
-		'y-offset' => 30, // The vertical alignment, trial and error between 20 and 60.
-		'file' => __DIR__ . DIRECTORY_SEPARATOR . 'Futura.ttc', // Font path
-		'color' => imagecolorallocate($image, 55, 160, 130), // RGB Colour of the text
+		'x-offset' => 30, // The larger the number the further the distance from the left hand side, 0 to align to the left.
+		'y-offset' => 65, // The vertical alignment, trial and error between 20 and 60.
+		'file' => __DIR__ . DIRECTORY_SEPARATOR . 'CentraNo2-Book.woff', // Font path
+		'color' => imagecolorallocate($image, 0, 0, 0), // RGB Color of the text
 	);
 	for($i = 0; $i <= 60; $i++){
-		
+
 		$interval = date_diff($future_date, $now);
-		
+
 		if($future_date < $now){
 			// Open the first source image and add the text.
-			$image = imagecreatefrompng('images/countdown.png');
+			$image = imagecreatefrompng($image_path);
 			;
-			$text = $interval->format('00:00:00:00');
-			imagettftext ($image , $font['size'] , $font['angle'] , $font['x-offset'] , $font['y-offset'] , $font['color'] , $font['file'], $text );
+			$text = "00    00    00    00";
+			imagettftext ($image , $font['size'] , $font['angle'] , $font['x-offset'] , $font['y-offset'] , $font['color'] , $font['file'], $text);
 			ob_start();
 			imagegif($image);
 			$frames[]=ob_get_contents();
@@ -44,10 +44,10 @@
 			break;
 		} else {
 			// Open the first source image and add the text.
-			$image = imagecreatefrompng('images/countdown.png');
+			$image = imagecreatefrompng($image_path);
 			;
-			$text = $interval->format('0%a %H %I %S');
-			imagettftext ($image , $font['size'] , $font['angle'] , $font['x-offset'] , $font['y-offset'] , $font['color'] , $font['file'], $text );
+			$text = $interval->format('%D    %H    %I    %S');
+			imagettftext ($image , $font['size'] , $font['angle'] , $font['x-offset'] , $font['y-offset'] , $font['color'] , $font['file'], $text);
 			ob_start();
 			imagegif($image);
 			$frames[]=ob_get_contents();
