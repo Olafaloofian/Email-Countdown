@@ -21,4 +21,3 @@ This generates an image based on the following variables:
     'color'=>imagecolorallocate($image, 55, 160, 130), // RGB Colour of the text
   );
 ```
-

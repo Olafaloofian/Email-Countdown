@@ -1,5 +1,5 @@
 <?php
-
+	// EDIT "C:\inetpub\wwwroot\gif.php" for dev changes
 	//Leave all this stuff as it is
 	date_default_timezone_set('America/Los_Angeles');
 	include 'GIFEncoder.class.php';
@@ -20,9 +20,9 @@
 	$font = array(
 		'size' => 48, // Font size, in pts usually.
 		'angle' => 0, // Angle of the text
-		'x-offset' => 30, // The larger the number the further the distance from the left hand side, 0 to align to the left.
+		'x-offset' => 16, // The larger the number the further the distance from the left hand side, 0 to align to the left.
 		'y-offset' => 65, // The vertical alignment, trial and error between 20 and 60.
-		'file' => __DIR__ . DIRECTORY_SEPARATOR . 'CentraNo2-Book.woff', // Font path
+		'file' => __DIR__ . DIRECTORY_SEPARATOR . 'CentraNo2-Book-Monospace-Digits.woff', // Font path
 		'color' => imagecolorallocate($image, 0, 0, 0), // RGB Color of the text
 	);
 	for($i = 0; $i <= 60; $i++){
@@ -46,7 +46,7 @@
 			// Open the first source image and add the text.
 			$image = imagecreatefrompng($image_path);
 			;
-			$text = $interval->format('%D    %H    %I    %S');
+			$text = $interval->format('%D   %H   %I   %S');
 			imagettftext ($image , $font['size'] , $font['angle'] , $font['x-offset'] , $font['y-offset'] , $font['color'] , $font['file'], $text);
 			ob_start();
 			imagegif($image);
